@@ -1,32 +1,95 @@
 # Threat Analysis Summary
 
-This threat model for the online banking system was created using the STRIDE framework. It includes key system components like the user interface, API gateway, authentication server, and database.
+This document summarizes the main threats identified in the threat modeling process for the **Online Banking System**, using the STRIDE framework. The analysis was performed using the Microsoft Threat Modeling Tool, focusing on identifying key risks and proposing mitigations.
 
-## Identified Threats and Mitigations
+---
 
-### 1. **Spoofing**
-- **Threat**: An attacker impersonates a user to gain unauthorized access.
-- **Mitigation**: Enforce strong authentication using 2FA and implement login attempt throttling.
+# STRIDE Categories and Threat Summary
 
-### 2. **Tampering**
-- **Threat**: An attacker modifies transaction data in transit.
-- **Mitigation**: Use end-to-end encryption (TLS 1.2+) and integrity checks with digital signatures.
+## Spoofing
 
-### 3. **Repudiation**
-- **Threat**: A user denies performing a transaction.
-- **Mitigation**: Maintain tamper-proof transaction logs with audit trails.
+### Threats Identified
 
-### 4. **Information Disclosure**
-- **Threat**: Exposure of sensitive account data.
-- **Mitigation**: Encrypt sensitive data in transit and at rest. Apply strict access control policies.
+* Attackers impersonating legitimate users to access accounts (via stolen credentials or phishing).
+* Malicious actors impersonating the banking server or app to capture user data (man-in-the-middle attacks).
 
-### 5. **Denial of Service (DoS)**
-- **Threat**: Overloading the system to make it unavailable to users.
-- **Mitigation**: Use load balancers and implement rate limiting and IP blacklisting.
+### Proposed Mitigations
 
-### 6. **Elevation of Privilege**
-- **Threat**: A user gains unauthorized admin access.
-- **Mitigation**: Apply role-based access control (RBAC) and regular privilege audits.
+* Enforce multi-factor authentication (MFA).
+* Implement strong password policies and encourage periodic password updates.
+* Use SSL/TLS certificates with proper certificate pinning to prevent fake server impersonation.
+
+## Tampering
+
+### Threats Identified
+
+* Modification of transaction data during transmission.
+* Unauthorized database changes or manipulation of stored records.
+
+### Proposed Mitigations
+
+* Use end-to-end encryption for all client-server communications.
+* Apply input validation and cryptographic integrity checks (hashing).
+* Implement strict access controls on APIs and databases.
+
+## Repudiation
+
+### Threats Identified
+
+* Users denying they initiated a transaction or action.
+* Employees denying system changes or administrative actions.
+
+### Proposed Mitigations
+
+* Use digital signatures or generate transaction receipts.
+* Ensure non-repudiation by confirming critical actions with signed acknowledgments.
+
+## Information Disclosure
+
+### Threats Identified
+
+* Exposure of sensitive data (e.g., account details, personal information) through unsecured channels, logs, or backups.
+* Data leakage during transmission due to weak encryption.
+
+### Proposed Mitigations
+
+* Encrypt sensitive data both at rest and in transit.
+* Apply least-privilege access controls to sensitive resources.
+* Regularly audit and secure backup data.
+
+## Denial of Service (DoS)
+
+### Threats Identified
+
+* Overloading the banking system with excessive requests (DDoS attacks).
+* Resource exhaustion due to poorly optimized or vulnerable endpoints.
+
+### Proposed Mitigations
+
+* Apply rate limiting and throttling on APIs.
+* Implement DDoS protection services and system redundancy.
+* Set up proactive monitoring and automated alerting for system health.
+
+## Elevation of Privilege
+
+### Threats Identified
+
+* Attackers exploiting software vulnerabilities to gain admin privileges.
+* Insiders abusing elevated roles for unauthorized access.
+
+### Proposed Mitigations
+
+* Apply the principle of least privilege and enforce role-based access controls.
+* Regularly patch and update all system components.
+* Conduct periodic security reviews and privilege audits.
+
+---
+
+# Conclusion
+
+The threat modeling process has helped identify critical security risks in the online banking system. By applying the outlined mitigations, the system can better protect against common attack vectors, safeguard customer data, and maintain trust and service availability.
+
+For details, refer to the exported **threat-model.pdf** file linked in the repository.
 
 ## Tools Used
 
